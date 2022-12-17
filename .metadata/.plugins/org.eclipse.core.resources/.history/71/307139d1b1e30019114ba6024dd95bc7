@@ -1,0 +1,46 @@
+package client;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+
+public class ClientWindow {
+
+	private JFrame frmChatSystem;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ClientWindow window = new ClientWindow();
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					window.frmChatSystem.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public ClientWindow() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmChatSystem = new JFrame();
+		frmChatSystem.setTitle("Chat System");
+		frmChatSystem.setBounds(100, 100, 600, 400);
+		frmChatSystem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+}

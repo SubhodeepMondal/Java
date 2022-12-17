@@ -1,0 +1,121 @@
+package chat;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class ChatWindow {
+
+	private JFrame frmChatWindow;
+	private JTextField textField;
+	private static JTextArea textArea = new JTextArea();
+	private Client clients;
+	JButton btnLogin = new JButton("Login");
+	JButton btnLogout = new JButton("Logout");
+	String name;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ChatWindow window = new ChatWindow();
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					window.frmChatWindow.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public ChatWindow() {
+		initialize();
+		name=JOptionPane.showInputDialog("Enter Name");
+		clients=new Client(name,"localhost",5281);
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmChatWindow = new JFrame();
+		frmChatWindow.setResizable(false);
+		frmChatWindow.setTitle("Chat Window");
+		frmChatWindow.setBounds(100, 100, 600, 400);
+		frmChatWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		textArea.setEditable(false);
+		btnLogin.setEnabled(true);
+		btnLogout.setEnabled(false);
+		
+		
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		frmChatWindow.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		
+		JPanel panel = new JPanel();
+		frmChatWindow.getContentPane().add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		textField = new JTextField();
+		textField.setText("");
+		panel.add(textField);
+		textField.setColumns(30);
+		
+		JButton btnSend = new JButton("Send");
+		/**
+		 * Send message to everyOne
+		 * To send message use 'Username:' before actual message
+		 */
+		btnSend.addActionListener(e->{
+			if(!textField.getText().equals("")) {
+				clients.send(name+"|"+textField.getText());
+				textField.setText("");
+			}
+		
+		});
+		panel.add(btnSend);
+		/**
+		 * Facilitate Login
+		 */
+		
+		btnLogin.addActionListener(e->{
+			clients.login();
+			btnLogin.setEnabled(false);
+			btnLogout.setEnabled(true);
+		});
+		panel.add(btnLogin);
+		/**
+		 * Facilitate Logout
+		 */
+		
+		
+		btnLogout.addActionListener(e->{
+			clients.logOut();
+			btnLogin.setEnabled(true);
+			btnLogout.setEnabled(false);
+		});
+		panel.add(btnLogout);
+		
+			
+	}
+	public static void printToConsole(String message) {
+		textArea.setText(textArea.getText()+message+"\n");
+	}
+
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+    <summary errors="1" failures="0" finished="true" name="Test Run: 2" tests="0" total_time="Finished in: 0.00 secs."/>
+    <test location="D:\Drive1\Java\Bank_Python\main.py" status="error" test="main" time="0">
+        <stdout/>
+        <stderr><![CDATA[Traceback (most recent call last):
+  File "C:\Users\Subhodeep Mondal\.p2\pool\plugins\org.python.pydev.core_9.3.0.202203051235\pysrc\_pydev_runfiles\pydev_runfiles.py", line 468, in __get_module_from_str
+    mod = __import__(modname)
+  File "D:\Drive1\Java\Bank_Python\main.py", line 30, in <module>
+    custAcc.getAccountInfo()
+  File "D:\Drive1\Java\Bank_Python\main.py", line 15, in getAccountInfo
+    print("Bank Name:", self.__bank__bankname,"\nBranch Name ", self.__bank__branchname,"\n IFSC Code: ", self.__bank__IFSC_Code,"\n")
+AttributeError: 'account' object has no attribute '_account__bank__bankname'
+ERROR: Module: main could not be imported (file: D:\Drive1\Java\Bank_Python\main.py).
+]]></stderr>
+    </test>
+    <launch mode="run">
+        <launch_memento><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="Bank_Python main.py (1)"/>
+]]></launch_memento>
+    </launch>
+</pydev-testsuite>

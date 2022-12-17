@@ -1,0 +1,29 @@
+class bank :
+    def __init__(self, IFSC_Code, bankname, branchname, loc):
+        self.IFSC_Code = IFSC_Code
+        self.bankname = bankname
+        self.branchname = branchname
+        self.loc = locals()
+        
+class account(bank) :
+    def __init__(self,AccountID, customer, balance,IFSC_Code, bankname, branchname, loc):
+        self.AccountID = AccountID
+        customer.customer = customer
+        self.balance = balance
+        bank.__init__(IFSC_Code,bankname, branchname, loc)
+    def getAccountInfo(self):
+        print("Bank Name:", bank.bankname,"\nBranch Name ", bank.branchname,"\n IFSC Code: ", bank.IFSC_Code,"\n")
+        print("Account ID: ", self.AccountID,"\nBalance: ", self.balance, "\n")
+        
+class customer :
+    def __init__(self,CustomerID,custname,address,contactdetails):
+        self.CustomerID = CustomerID
+        self.custname = custname
+        self.address = address
+        self.contactdetails = contactdetails
+    def customerDetails(self):
+        print("Customer Name: ", bank.bankname,"\nCustomer ID: ", bank.branchname,"\nAddress: ", bank.IFSC_Code,"\n")
+
+cust = customer('C0001','Sanjay','Kolkata','729791112')
+cust.customerDetails()
+

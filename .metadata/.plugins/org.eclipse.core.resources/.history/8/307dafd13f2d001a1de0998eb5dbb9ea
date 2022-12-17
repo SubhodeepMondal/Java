@@ -1,0 +1,27 @@
+package subhoConcurrent;
+
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class ThreadHandler extends Thread{
+	Socket s;
+	int n;
+	ThreadHandler(Socket s, int n) {
+		this.s = s;
+		this.n = n;
+	}
+	
+	public void run() {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter pw = new PrintWriter(s.getOutputStream());
+			pw.println("Hello Client");
+		}
+		catch(IOException e) {
+			System.out.println("IO error"+e);
+		}
+	}
+}

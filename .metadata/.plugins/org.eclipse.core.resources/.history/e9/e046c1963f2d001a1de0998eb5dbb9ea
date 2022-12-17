@@ -1,0 +1,24 @@
+package subhoConcurrent;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import concurrent.ThreadHandler;
+
+
+public class Server {
+	public static void main(String[] args)throws Exception {
+		int nreq = 0;
+		ServerSocket server = new ServerSocket(7000);
+		System.out.println("Server Connected");
+		
+		while(true) {
+			Socket client = server.accept();
+			System.out.println("Setting up thread to handle this client");
+			ThreadHandler t=new ThreadHandler(client,nreq);
+			t.start();
+			System.out.println("Running thread for cient "+nreq);
+	      	nreq++;
+		}
+	}
+}

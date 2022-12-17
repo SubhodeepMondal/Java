@@ -1,0 +1,83 @@
+package chat;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Map.Entry;
+
+import server.ClientInfo;
+
+public class ChatServer {
+	
+	private static Map logedinUsers = new HashMap();//format is [userId,ip:port]
+	private static int port;
+	private static DatagramSocket socket;
+	private static boolean running;
+	private static int id;
+	private static ArrayList<ClientInfo> clients=new ArrayList<ClientInfo>();
+	
+	public static void main(String args[]){
+		try {
+			socket=new DatagramSocket(port);
+			running=true;
+			listen();
+			System.out.println("Server started on port"+port);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void listen() {
+		Thread listenThread=new Thread("Chat Listner") {
+			public void run() {
+				
+				try {
+					while(running) {
+						byte[] data=new byte[1024];
+						DatagramPacket packet=new DatagramPacket(data,data.length);
+						socket.receive(packet);
+						String message=new String(data);
+						message=message.substring(0,message.indexOf("\\e"));
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		listenThread.start();
+	}
+	
+	private static void handleCommand(String message, DatagramPacket packet) {
+        
+        if(message.startsWith("\\login")){
+        	//cmd structure is [login:<userid>:<ip>:<port>]
+        	/*handle login command
+        	 * 1. send logedinUsers object to the client
+        	 * 2. forward the command to all the  loggedinUsers, 
+        	 * 3. add the new user to the logedinUsers map
+        	 */
+        	String name=message.substring(message.indexOf(":")+1);
+        	clients.add(new ClientInfo(name,packet.getAddress(),packet.getPort()));
+        	
+        }else if(message.startsWith("\\logout")){
+        	//cmd structure is [logout:<userid>]
+        	/*handle logout command
+        	 * 1. Remove the user from logedinUsers
+        	 * 2. forward the command to all the  loggedinUsers, 
+        	 */
+        	
+        }
+	}
+	
+
+}

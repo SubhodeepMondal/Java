@@ -1,0 +1,52 @@
+package chat;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Map.Entry;
+
+public class ChatServer {
+	
+	private static Map logedinUsers = new HashMap();//format is [userId,ip:port]
+	
+	public static void main(String args[])throws Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the listning port:");		
+		int port=sc.nextInt();	
+		
+		ServerSocket welcomeSocket = new ServerSocket(port);
+		while(true){
+			System.out.println("Server is listening...");
+			Socket connectionSocket = welcomeSocket.accept();	
+		
+			BufferedReader br=new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+			String cmd = br.readLine();//Server can receive login or logout command
+			handleCommand(cmd, connectionSocket);
+		}
+	}
+	
+	private static void handleCommand(String cmd, Socket connectionSocket) throws Exception {
+        String component[] = cmd.split(":");
+        if(component[0].equals("login")){//cmd structure is [login:<userid>:<ip>:<port>]
+        	/*handle login command
+        	 * 1. send logedinUsers object to the client
+        	 * 2. forward the command to all the  loggedinUsers, 
+        	 * 3. add the new user to the logedinUsers map
+        	 */
+        }else if(component[0].equals("logout")){//cmd structure is [logout:<userid>]
+        	/*handle logout command
+        	 * 1. Remove the user from logedinUsers
+        	 * 2. forward the command to all the  loggedinUsers, 
+        	 */
+        }
+	}
+	
+
+}
